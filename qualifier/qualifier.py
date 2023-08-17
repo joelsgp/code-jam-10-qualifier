@@ -30,6 +30,17 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     return True
 
 
+def get_coords(image_size: tuple[int, int], tile_size: tuple[int, int], tile: int) -> tuple[int, int]:
+    """Given the tile number, return its co-ordinates."""
+    horizontal_tiles = image_size[0] // tile_size[0]
+    vertical_tiles = image_size[1] // tile_size[1]
+
+    x, tile = divmod(tile, vertical_tiles)
+    y = tile // horizontal_tiles
+
+    return x, y
+
+
 def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[int], out_path: str) -> None:
     """
     Rearrange the image.
