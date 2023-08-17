@@ -13,12 +13,15 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
         return False
 
     tile_count = horizontal_tiles * vertical_tiles
-    if len(ordering) != tile_count:
-        # wrong number of elements
-        return False
+    ordering_match = range(tile_count)
+    sorted_ordering = sorted(ordering)
 
-    if len(ordering) != len(frozenset(ordering)):
-        # duplicate elements
+    try:
+        for a, b in zip(ordering_match, sorted_ordering, strict=True):
+            if a != b:
+                return False
+    except ValueError:
+        # length of ordering is wrong
         return False
 
     return True
