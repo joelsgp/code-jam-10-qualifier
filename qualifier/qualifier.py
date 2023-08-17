@@ -1,3 +1,6 @@
+import PIL.Image
+
+
 def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], ordering: list[int]) -> bool:
     """
     Return True if the given input allows the rearrangement of the image, False otherwise.
@@ -38,3 +41,6 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
     once. If these conditions do not hold, raise a ValueError with the message:
     "The tile size or ordering are not valid for the given image".
     """
+    image = PIL.Image.open(image_path)
+    if not valid_input(image.size, tile_size, ordering):
+        raise ValueError("The tile size or ordering are not valid for the given image")
