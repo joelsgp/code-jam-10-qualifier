@@ -5,6 +5,23 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     The tile size must divide each image dimension without remainders, and `ordering` must use each input tile exactly
     once.
     """
+    horizontal_tiles, ht_remainder = divmod(image_size[0], tile_size[0])
+    vertical_tiles, vt_remainder = divmod(image_size[1], tile_size[1])
+
+    if ht_remainder != 0 or vt_remainder != 0:
+        # doesn't divide properly
+        return False
+
+    tile_count = horizontal_tiles * vertical_tiles
+    if len(ordering) != tile_count:
+        # wrong number of elements
+        return False
+
+    if len(ordering) != len(frozenset(ordering)):
+        # duplicate elements
+        return False
+
+    return True
 
 
 def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[int], out_path: str) -> None:
